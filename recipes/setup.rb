@@ -16,7 +16,11 @@ package 'tree'
 package 'ctags'
 # package 'fish'
 
-cookbook_file '/etc/ssh/ssh_config'
+cookbook_file '/etc/ssh/sshd_config'
+
+service 'sshd' do
+  action :restart
+end
 
 directory '/home/chef/.ssh'
 cookbook_file '/home/chef/.ssh/authorized_keys' do
