@@ -6,11 +6,15 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+# execute 'yum-config-manager --add-repo http://fishshell.com/files/linux/RedHat_RHEL-6/fish.release:2.repo'
+
 package 'nano' do
   action :remove
 end
 
 package 'tree'
+package 'ctags'
+# package 'fish'
 
 cookbook_file '/etc/ssh/ssh_config'
 
