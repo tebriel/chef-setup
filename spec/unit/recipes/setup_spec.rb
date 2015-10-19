@@ -25,6 +25,10 @@ describe 'workstation::setup' do
       expect(chef_run).to install_package('ctags')
     end
 
+    it 'Adds the chef user' do
+      expect(chef_run).to create_user('chef')
+    end
+
     it 'Updates the sshd config file' do
       expect(chef_run).to create_cookbook_file('/etc/ssh/sshd_config')
     end

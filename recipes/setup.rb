@@ -6,7 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-# execute 'yum-config-manager --add-repo http://fishshell.com/files/linux/RedHat_RHEL-6/fish.release:2.repo'
 
 package 'nano' do
   action :remove
@@ -14,13 +13,13 @@ end
 
 package 'tree'
 package 'ctags'
-# package 'fish'
 
-cookbook_file '/etc/ssh/sshd_config'
 
-service 'sshd' do
-  action :restart
+cookbook_file '/etc/ssh/sshd_config' do
+  notifies :restart, 'service[sshd]', :immediate
 end
+
+user 'chef'
 
 directory '/home/chef/.ssh'
 cookbook_file '/home/chef/.ssh/authorized_keys' do
@@ -31,4 +30,8 @@ end
 
 file '/etc/motd' do
   content 'Property of ...\n'
+end
+
+service 'sshd' do
+  action [:start, :enable]
 end
