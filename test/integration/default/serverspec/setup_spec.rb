@@ -40,11 +40,9 @@ describe 'workstation::setup' do
   end
 
   describe file('/etc/motd') do
-    ip_str = host_inventory['local-ipv4']
     hostname = host_inventory['hostname']
     memory = host_inventory['memory']['total']
     its(:content) { should match(/Property of .../) }
-    its(:content) { should match(/#{ip_str}/) }
     its(:content) { should match(/#{hostname}/) }
     its(:content) { should match(/MemTotal: #{memory}/) }
   end
