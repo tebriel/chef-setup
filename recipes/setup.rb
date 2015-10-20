@@ -11,6 +11,7 @@ package 'nano' do
   action :remove
 end
 
+package 'vim'
 package 'tree'
 package 'ctags'
 package 'screen'
