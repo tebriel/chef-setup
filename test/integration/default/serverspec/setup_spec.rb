@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'workstation::default' do
+describe 'workstation::setup' do
   # Serverspec examples can be found at
   # http://serverspec.org/resource_types.html
   describe package('nano') do
@@ -15,9 +15,13 @@ describe 'workstation::default' do
     it { should be_installed }
   end
 
+  describe package('screen') do
+    it { should be_installed }
+  end
+
   describe file('/etc/ssh/sshd_config') do
     it { should exist }
-    its(:content) { should match /^PrintMotd yes/ }
+    its(:content) { should match(/^PrintMotd yes/) }
   end
 
   describe user('chef') do
@@ -36,6 +40,12 @@ describe 'workstation::default' do
   end
 
   describe file('/etc/motd') do
-    its(:content) { should match /Property of/ }
+    ip_str = host_inventory['local-ipv4']
+    hostname = host_inventory['hostname']
+    memory = host_inventory['memory']['total']
+    its(:content) { should match(/Property of .../) }
+    its(:content) { should match(/#{ip_str}/) }
+    its(:content) { should match(/#{hostname}/) }
+    its(:content) { should match(/MemTotal: #{memory}/) }
   end
 end

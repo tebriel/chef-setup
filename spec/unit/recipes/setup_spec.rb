@@ -42,7 +42,8 @@ describe 'workstation::setup' do
     end
 
     it 'Adds the auth keys' do
-      expect(chef_run).to create_cookbook_file('/home/chef/.ssh/authorized_keys')
+      expect(chef_run)
+        .to create_cookbook_file('/home/chef/.ssh/authorized_keys')
         .with(user: 'chef', group: 'chef', mode: '0600')
     end
 

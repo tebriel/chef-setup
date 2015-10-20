@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: setup
-# Recipe:: default
+# Recipe:: setup
 #
-# Copyright 2015, YOUR_COMPANY_NAME
+# Copyright 2015, Umbrella Corp
 #
 # All rights reserved - Do Not Redistribute
 #
@@ -13,7 +13,7 @@ end
 
 package 'tree'
 package 'ctags'
-
+package 'screen'
 
 cookbook_file '/etc/ssh/sshd_config' do
   notifies :restart, 'service[sshd]', :immediate
@@ -29,7 +29,13 @@ cookbook_file '/home/chef/.ssh/authorized_keys' do
 end
 
 file '/etc/motd' do
-  content 'Property of ...\n'
+  content "Property of ...\n
+
+  IPADDRESS: #{node['ipaddress']}
+  HOSTNAME: #{node['hostname']}
+  MemTotal: #{node['memory']['total']}
+  CPU MHz: #{node['cpu']['0']['mhz']}
+"
 end
 
 service 'sshd' do
