@@ -28,15 +28,7 @@ cookbook_file '/home/chef/.ssh/authorized_keys' do
   group 'chef'
 end
 
-file '/etc/motd' do
-  content "Property of ...\n
-
-  IPADDRESS: #{node['ipaddress']}
-  HOSTNAME: #{node['hostname']}
-  MemTotal: #{node['memory']['total']}
-  CPU MHz: #{node['cpu']['0']['mhz']}
-"
-end
+template '/etc/motd'
 
 service 'sshd' do
   action [:start, :enable]
